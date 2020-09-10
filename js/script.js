@@ -147,7 +147,89 @@ function addPagination(list) {
          setActiveButtonClass(activeButtonIndex - 1);
 
          // show the selected page items
-         showPage(data, activeButtonIndex);
+         let searchValue = document.getElementById('search').value;
+         let matchedData = searchListForMatches(data, searchValue);
+
+         showPage(matchedData, activeButtonIndex)
+      }
+   });
+}
+
+/***
+ * @function searchListForMatches - search student list for matches
+ * @param {string} searchString - user supplied string to match students
+ * @return {object} - array of matched student objects
+***/
+function searchListForMatches(data, searchString){
+
+   // check each name for a match
+   let matchedStudents = [];
+
+   if( searchString.length == 0){
+      // search field empty, use all values
+      matchedStudents = data;
+   }else{
+      // loop for each student
+      for( let i = 0; i < data.length; i++){
+         let searchName = data[i].name.first + " " + data[i].name.last;
+         searchName = searchName.toLowerCase();
+         searchString = searchString.toLowerCase();
+
+         // create new array with matching students
+         if( searchName.includes(searchString )) {
+            matchedStudents.push(data[i]);
+         }
+      }
+   }
+
+   // show error message if no results
+   let error = document.getElementById('error');
+   if(matchedStudents.length == 0){
+      error.innerHTML = `No Results Found!`;
+   }else{
+      error.innerHTML = ``;
+   }
+
+   return matchedStudents;
+}
+
+/***
+ * @function addSearchBar - add search bar to page
+ ***/
+function addSearchBar(){
+
+   let searchHTML = `
+      <label id="error"></label>
+      <label for="search" class="student-search">
+      <input id="search" placeholder="Search by name...">
+      <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+      </label>
+   `;
+
+   // get header element
+   let header = document.querySelector('.header');
+   header.insertAdjacentHTML('beforeend', searchHTML);
+
+   function searchList(data, searchValue){
+      let matchedData = searchListForMatches(data, searchValue);
+      showPage(matchedData, 1);
+      addPagination(matchedData);
+   }
+
+   // add event listeners up key ups
+   header.addEventListener('keyup', (e) => {
+      if(event.target.id === 'search'){
+         let searchValue = event.target.value;
+         searchList(data, searchValue);
+      }
+
+   });
+
+   // add event listeners for search button
+   header.addEventListener('click', (e) => {
+      if(event.target.nodeName === 'IMG'){
+         let searchValue = document.getElementById('search').value;
+         searchList(data, searchValue);
       }
    });
 }
@@ -157,3 +239,6 @@ showPage(data, 1);
 
 // add pagination buttons
 addPagination(data);
+
+// add search bar
+addSearchBar();

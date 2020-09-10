@@ -208,3 +208,7 @@ header h2 {
 		box-shadow: 0 4px 16px 0 rgba(22, 42, 90, 0.09);
 	}
 }
+
+#error {
+  padding: 10px;
+}
