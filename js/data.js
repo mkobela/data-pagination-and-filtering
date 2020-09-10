@@ -3,7 +3,25 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-// Array of student objects
+/*** 
+ * @type {Array.<Object>} - quotes array
+ * 
+ * @type {Object} - person
+ * @property {string} title - person title
+ * @property {string} first - person last name
+ * @property {string} last - person firt name
+ * 
+ * @property {string} email - email address
+ * 
+ * @type {Object} - registered
+ * @property {string} date - registration date
+ * @property {string} age - age
+ *
+ * @type {Object} - picture
+ * @property {string} large - large jpg URL
+ * @property {string} medium - medium jpg URL
+ * @property {string} small - small jpg URL
+***/
 const data = [
   {
     name: {
