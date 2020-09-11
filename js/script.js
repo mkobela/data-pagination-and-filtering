@@ -113,7 +113,7 @@ function showPage(list, page) {
 function addPagination(list) {
 
    // calculate number of pagination buttons needed
-   let numberOfButtons = parseInt(list.length / itemsPerPage) + 1;
+   let numberOfButtons = Math.ceil(list.length / itemsPerPage);
 
    // select the UL for buttons
    let linkList = document.querySelector('.link-list');
